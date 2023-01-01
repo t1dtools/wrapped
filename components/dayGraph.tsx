@@ -24,13 +24,28 @@ export const DayGraph = (props: Props) => {
         })
     }
 
-    const days = props.dailyRecords.map((day: DailyRecord) => {
-        return {
-            date: day.date,
-            percentage: day.rangePercentage,
-            hasReading: true,
+    const isLeapYear = (year: number) => {
+        return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)
+    }
+
+    const daysInYear = (year: number) => {
+        return isLeapYear(year) ? 366 : 365
+    }
+
+    const days = []
+    for (let i = 0; i < daysInYear(year); i++) {
+        const date = new Date(year, 0, i + 1)
+        const entry = props.dailyRecords.find(day => {
+            return day.date.toDateString() === date.toDateString()
+        })
+
+        const day = {
+            date: date,
+            percentage: entry ? entry.rangePercentage : 0,
+            hasReading: entry ? true : false,
         }
-    })
+        days.push(day)
+    }
 
     days.sort((a, b) => {
         return a.date.getTime() - b.date.getTime()
