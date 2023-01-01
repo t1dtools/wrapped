@@ -20,6 +20,15 @@ export default function Home() {
         setCGMDataLoading(false)
     }
 
+    const handleDroppedFile = async (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        console.log('I WAS FIRED!!!')
+        event.dataTransfer.files &&
+            parseData({ target: { files: event.dataTransfer.files } } as React.ChangeEvent<HTMLInputElement>)
+    }
+
     const parseData = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setCGMDataLoading(true)
 
@@ -57,9 +66,9 @@ export default function Home() {
             <Headline size={1} text="t1d.tools/wrapped" />
             <div className="flex flex-col items-center justify-center self-center">
                 {dailyRecords.length === 0 && (
-                    <div className="z-10 w-full rounded-xl bg-white p-10 sm:max-w-lg">
+                    <div className="z-10 w-full rounded-xl bg-gray-800 p-10 sm:max-w-lg">
                         <div className="text-center">
-                            <h2 className="mt-5 text-3xl font-bold text-gray-900">Analyze your CGM data!</h2>
+                            <h2 className="mt-5 text-3xl font-bold text-gray-200">Analyze your CGM data!</h2>
                             <p className="mt-2 text-sm text-gray-400">
                                 t1d.tools wrapped runs entirely in your browser, sending no data to any servers. Find
                                 the project on{' '}
@@ -98,7 +107,10 @@ export default function Home() {
                                     </label>
                                     <div className="flex w-full items-center justify-center">
                                         <label className="h-30 group flex w-full cursor-pointer flex-col rounded-lg border-4 border-dashed p-10 text-center">
-                                            <div className="flex h-full w-full flex-col items-center justify-center text-center  ">
+                                            <div
+                                                className="flex h-full w-full flex-col items-center justify-center text-center"
+                                                onDrop={handleDroppedFile}
+                                                onDragOver={e => e.preventDefault()}>
                                                 <p className="pointer-none text-gray-500 ">
                                                     <span className="text-sm">Drag and drop</span> your CGM export here{' '}
                                                     <br /> or click to select a file from your computer.
@@ -118,18 +130,23 @@ export default function Home() {
                                 <div className="grid grid-cols-1 space-y-2">Coming soon</div>
                             )}
                         </form>
+
+                        {CGMDataLoading && <div className="pt-8 text-center">Parsing CGM data...</div>}
+                        {!CGMDataLoading && CGMDataError && (
+                            <div className="pt-8 text-center">
+                                There was an error parsing your CGM data: {CGMDataError}
+                            </div>
+                        )}
                     </div>
                 )}
                 {dailyRecords.length > 0 && !CGMDataLoading && (
-                    <div className="pointer-cursor absolute top-5 right-5 rounded-xl bg-gray-800 p-4">
-                        <a onClick={reset} className="pointer-cursor text-sm">
+                    <div className="pointer-cursor absolute top-5 right-5 rounded-md bg-gray-800 p-2 hover:text-gray-400">
+                        <a href="#" onClick={reset} className="pointer-cursor text-sm">
                             Start over?
                         </a>
                     </div>
                 )}
 
-                {CGMDataLoading && <div>Loading CGM data...</div>}
-                {!CGMDataLoading && CGMDataError && <div>There was an error parsing your CGM data: {CGMDataError}</div>}
                 {!CGMDataLoading && dailyRecords.length > 0 && <>{<DayGraph dailyRecords={dailyRecords} />}</>}
                 {!CGMDataLoading && dailyRecords.length > 0 && (
                     <>
