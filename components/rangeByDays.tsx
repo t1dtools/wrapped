@@ -51,7 +51,7 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                 text="Range By Days"
                 subheadline="Hover over this graph to see how many days you spent in which range for the entire year."
             />
-            <div className="percentage-bar flex  w-[1500px] text-center">
+            <div className="percentage-bar flex w-[1500px] text-center">
                 {daysInRange.d0t10 > 0 && (
                     <div
                         style={{

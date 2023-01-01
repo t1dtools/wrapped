@@ -32,7 +32,7 @@ export const parseLibreViewData = async (file: File, year: number): Promise<Pars
     }
 
     const lines = data.toString().split('\n')
-    lines.forEach(line => {
+    lines.map(line => {
         const fields = line.split(',')
         const reading: LibreViewReading = {
             Device: fields[0],
@@ -60,6 +60,13 @@ export const parseLibreViewData = async (file: File, year: number): Promise<Pars
             libreReadings.push(reading)
         }
     })
+
+    if (libreReadings.length === 0 || libreReadings[0].Device.indexOf('FreeStyle') === -1) {
+        return {
+            records: [],
+            error: { message: 'Invalid or unknown data format. Did you choose the correct CGM provider?' },
+        }
+    }
 
     const glucoseReadings: GlucoseReading[] = mapLibreViewToGlucoseReadings(libreReadings)
 
