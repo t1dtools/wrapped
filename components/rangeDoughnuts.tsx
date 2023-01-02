@@ -71,7 +71,7 @@ export const RangeDoughnuts = ({ dailyRecords }: { dailyRecords: DailyRecord[] }
                 <Doughnut count={daysOverPercentage.d70} headline="Days over 70%" total={total} />
                 <Doughnut count={daysOverPercentage.d80} headline="Days over 80%" total={total} />
                 <Doughnut count={daysOverPercentage.d90} headline="Days over 90%" total={total} />
-                <Doughnut count={daysOverPercentage.d100} headline="Unicorns" total={total} />
+                <Doughnut count={daysOverPercentage.d100} headline="Days at 100%" total={total} />
             </div>
         </>
     )

@@ -11,9 +11,9 @@ export const Doughnut = (props: DoughnutProps) => {
     return (
         <>
             <div>
-                <div className="headline-small">{props.headline}</div>
-                <div className="doughnut-graph">
-                    <div className="digit-inside-doughnut">{percentage}%</div>
+                <div className="mb-2 text-center text-lg">{props.headline}</div>
+                <div className="doughnut-graph flex flex-col items-center justify-center">
+                    <div className="absolute mb-2 w-full text-center text-4xl">{props.count}</div>
                     <svg width={160} height={160} xmlns="http://www.w3.org/2000/svg">
                         <g>
                             <title>{props.headline}</title>
@@ -24,13 +24,30 @@ export const Doughnut = (props: DoughnutProps) => {
                                 cx={81}
                                 strokeWidth={15}
                                 strokeDashoffset={doughnutFillRate}
-                                stroke="#6fdb6f"
+                                strokeLinecap="round"
+                                stroke="#00ff66"
+                                fill="none"
+                            />
+                        </g>
+                    </svg>
+                    <svg className="absolute" width={160} height={160} xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <title>{props.headline}</title>
+                            <circle
+                                className="circle"
+                                r="69.85699"
+                                cy={81}
+                                cx={81}
+                                strokeWidth={15}
+                                strokeDashoffset={440}
+                                strokeLinecap="round"
+                                stroke="#000000"
                                 fill="none"
                             />
                         </g>
                     </svg>
                 </div>
-                <div className="digit-under-doughnut">{props.count}</div>
+                <div className="text-md pt-[165px] text-center">{percentage}%</div>
             </div>
             <style jsx>
                 {`
