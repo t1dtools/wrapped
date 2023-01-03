@@ -1,12 +1,13 @@
 import { GlucoseReading, ParseResponse } from './glucose'
 import { parse } from 'date-fns'
+import { csvParse } from 'd3-dsv'
 
 export type LibreViewReading = {
     Device: string
     SerialNumber: string
-    DeviceTimestamp: Date
-    RecordType: number
-    HistoricGlucoseMmol: number
+    DeviceTimestamp: string
+    RecordType: string
+    HistoricGlucoseMmol: string
     ScanGlucoseMmol: string
     NonNumericRapidActingInsulin: string
     RapidActingInsulinUnits: string
@@ -24,44 +25,31 @@ export type LibreViewReading = {
 }
 
 export const parseLibreViewData = async (file: File, year: number): Promise<ParseResponse> => {
-    const libreReadings: LibreViewReading[] = []
+    let libreReadings: LibreViewReading[] = []
 
-    const data = await file.text()
+    let data = await file.text()
     if (!data) {
         return { records: [], error: { message: 'Unable to parse file' } }
     }
 
-    const lines = data.toString().split('\n')
-    lines.map(line => {
-        const fields = line.split(',')
-        const reading: LibreViewReading = {
-            Device: fields[0],
-            SerialNumber: fields[1],
-            DeviceTimestamp: parse(fields[2], 'dd-MM-yyyy HH:mm', new Date()),
-            RecordType: parseInt(fields[3]),
-            HistoricGlucoseMmol: parseFloat(fields[4]),
-            ScanGlucoseMmol: fields[5],
-            NonNumericRapidActingInsulin: fields[6],
-            RapidActingInsulinUnits: fields[7],
-            NonNumericFood: fields[8],
-            CarbohydratesGrams: fields[9],
-            CarbohydratesServings: fields[10],
-            NonNumericLongActingInsulin: fields[11],
-            LongActingInsulinValueUnits: fields[12],
-            Notes: fields[13],
-            StripGlucoseMmol: fields[14],
-            KetoneMmol: fields[15],
-            MealInsulinUnits: fields[16],
-            CorrectionInsulinUnits: fields[17],
-            UserChangeInsulinUnits: fields[18],
-        }
+    // Remove first line
+    data = data.split('\n').slice(1).join('\n')
 
-        if (reading.DeviceTimestamp.getFullYear() === year) {
-            libreReadings.push(reading)
-        }
-    })
+    // Replace new first line
+    data = [
+        'Device,SerialNumber,DeviceTimestamp,RecordType,HistoricGlucoseMmol,ScanGlucoseMmol,NonNumericRapidActingInsulin,RapidActingInsulinUnits,NonNumericFood,CarbohydratesGrams,CarbohydratesServings,NonNumericLongActingInsulin,LongActingInsulinValueUnits,Notes,StripGlucoseMmol,KetoneMmol,MealInsulinUnits,CorrectionInsulinUnits,UserChangeInsulinUnits\n',
+        data,
+    ].join('\n')
 
-    if (libreReadings.length === 0 || libreReadings[0].Device.indexOf('FreeStyle') === -1) {
+    libreReadings = csvParse(data)
+    if (libreReadings.length < 2) {
+        return {
+            records: [],
+            error: { message: 'Insufficient data found in provided file.' },
+        }
+    }
+
+    if (libreReadings[2].Device.indexOf('FreeStyle') === -1) {
         return {
             records: [],
             error: { message: 'Invalid or unknown data format. Did you choose the correct CGM provider?' },
@@ -76,10 +64,10 @@ export const parseLibreViewData = async (file: File, year: number): Promise<Pars
 const mapLibreViewToGlucoseReadings = (libreReadings: LibreViewReading[]): GlucoseReading[] => {
     const glucoseReadings: GlucoseReading[] = []
     libreReadings.forEach(reading => {
-        if (reading.RecordType === 0) {
+        if (reading.RecordType === '0') {
             const glucoseReading: GlucoseReading = {
-                Timestamp: reading.DeviceTimestamp,
-                Value: reading.HistoricGlucoseMmol,
+                Timestamp: parse(reading.DeviceTimestamp, 'dd-MM-yyyy HH:mm', new Date()),
+                Value: parseFloat(reading.HistoricGlucoseMmol),
             }
             glucoseReadings.push(glucoseReading)
         }
