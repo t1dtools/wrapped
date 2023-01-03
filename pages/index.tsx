@@ -6,7 +6,9 @@ import { RangeByDays } from '../components/rangeByDays'
 import { Headline } from '../components/headline'
 import { mapGlucoseRecordsToDailyRecords, DailyRecord } from '../datahandling/dailyRecords'
 import { parseLibreViewData } from '../parsing/libreview'
+import { parseDexcomClarityData } from '../parsing/dexcomclarity'
 import classnames from 'classnames'
+import { ParseResponse } from '../parsing/glucose'
 
 export default function Home() {
     const [cgmProvider, setCGMProvider] = useState<'dexcom' | 'libreview' | 'nightscout' | undefined>(undefined)
@@ -40,13 +42,29 @@ export default function Home() {
         }
 
         const file = event.target.files[0]
-        const { records, error } = await parseLibreViewData(file, 2022)
 
-        if (error) {
-            setCGMDataError(error.message)
+        let response: ParseResponse
+        switch (cgmProvider) {
+            case 'libreview':
+                response = await parseLibreViewData(file, 2022)
+                break
+            case 'dexcom':
+                response = await parseDexcomClarityData(file, 2022)
+                break
+            default:
+                response = {
+                    records: [],
+                    error: { message: 'No cgm provider selected.' },
+                }
+        }
+
+        if (response.error) {
+            setCGMDataError(response.error.message)
             setCGMDataLoading(false)
             return
         }
+
+        const records = response.records
 
         const mappedDailyRecords = mapGlucoseRecordsToDailyRecords(records)
 
@@ -88,7 +106,7 @@ export default function Home() {
                 {dailyRecords.length === 0 && (
                     <div className="z-10 w-full rounded-xl bg-gray-800 p-10 sm:max-w-lg">
                         <div className="text-center">
-                            <h2 className="mt-5 text-3xl font-bold text-gray-200">Analyze your CGM data!</h2>
+                            <h2 className="mt-5 text-3xl font-bold text-gray-200">Visualize your CGM data!</h2>
                             <p className="mt-2 text-sm text-gray-400">
                                 t1d.tools wrapped runs entirely in your browser, sending no data to any servers. Find
                                 the project on{' '}
@@ -122,9 +140,7 @@ export default function Home() {
                                         id="cgmproviders"
                                         className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500">
                                         <option value="choose">Choose a CGM data provider</option>
-                                        <option disabled={true} value="dexcom">
-                                            Dexcom Clarity (Coming soon)
-                                        </option>
+                                        <option value="dexcom">Dexcom Clarity</option>
                                         <option value="libreview">Libreview (Freestyle Libre)</option>
                                         <option disabled={true} value="nightscout">
                                             Nightscout (Coming soon)
