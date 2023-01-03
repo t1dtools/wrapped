@@ -30,22 +30,6 @@ export const Doughnut = (props: DoughnutProps) => {
                             />
                         </g>
                     </svg>
-                    <svg className="absolute" width={160} height={160} xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <title>{props.headline}</title>
-                            <circle
-                                className="circle"
-                                r="69.85699"
-                                cy={81}
-                                cx={81}
-                                strokeWidth={15}
-                                strokeDashoffset={440}
-                                strokeLinecap="round"
-                                stroke="#000000"
-                                fill="none"
-                            />
-                        </g>
-                    </svg>
                 </div>
                 <div className="text-md pt-[165px] text-center">{percentage}%</div>
             </div>
