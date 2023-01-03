@@ -42,8 +42,6 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
         }
     })
 
-    console.log(daysInRange)
-
     return (
         <>
             <Headline
