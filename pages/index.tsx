@@ -89,6 +89,21 @@ export default function Home() {
         input && input.click()
     }
 
+    const showDemo = () => {
+        const demoData: DailyRecord[] = []
+        for (let i = 1; i < 366; i++) {
+            if (i % 100 === 0) {
+                console.log(new Date(2022, 0, i))
+            }
+            demoData.push({
+                date: new Date(2022, 0, i),
+                rangePercentage: Math.round(Math.random() * 100),
+            })
+        }
+
+        setDailyRecords(demoData)
+    }
+
     return (
         <>
             <Head>
@@ -120,9 +135,9 @@ export default function Home() {
                             </p>
                             <p className="mt-2 text-sm text-gray-400">
                                 Curious what this is?{' '}
-                                <a href="" className="text-blue-500 hover:text-blue-700">
+                                <button onClick={e => showDemo()} className="text-blue-500 hover:text-blue-700">
                                     Have a look at this demo
-                                </a>
+                                </button>
                                 .
                             </p>
                         </div>
@@ -254,7 +269,7 @@ export default function Home() {
                 {!CGMDataLoading && dailyRecords.length > 0 && (
                     <>
                         {
-                            <div className="mb-8 w-[1600px] rounded-xl bg-gray-800 p-10 pt-0">
+                            <div className="w-[1600px] rounded-xl bg-gray-800 p-10 pt-0">
                                 <RangeDoughnuts dailyRecords={dailyRecords} />
                             </div>
                         }
