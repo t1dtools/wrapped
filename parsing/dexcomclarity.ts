@@ -20,8 +20,6 @@ export type DexcomClarityReading = {
 }
 
 export const parseDexcomClarityData = async (file: File, year: number): Promise<ParseResponse> => {
-    let dexcomReadings: DexcomClarityReading[] = []
-
     let data = await file.text()
     if (!data) {
         return { records: [], error: { message: 'Unable to parse file' } }
@@ -32,7 +30,11 @@ export const parseDexcomClarityData = async (file: File, year: number): Promise<
         data = data.slice(102)
     }
 
-    dexcomReadings = csvParse(data)
+    const parsedData = csvParse(data)
+    let dexcomReadings: DexcomClarityReading[] = []
+    parsedData.map((reading, index) => {
+        dexcomReadings.push(<DexcomClarityReading>reading)
+    })
 
     // Clean out any empty records, or records that aren't EGVs
     dexcomReadings = dexcomReadings.filter(reading => reading['Index'] !== '' && reading['Event Type'] === 'EGV')

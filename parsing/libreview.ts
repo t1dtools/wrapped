@@ -25,8 +25,6 @@ export type LibreViewReading = {
 }
 
 export const parseLibreViewData = async (file: File, year: number): Promise<ParseResponse> => {
-    let libreReadings: LibreViewReading[] = []
-
     let data = await file.text()
     if (!data) {
         return { records: [], error: { message: 'Unable to parse file' } }
@@ -41,7 +39,12 @@ export const parseLibreViewData = async (file: File, year: number): Promise<Pars
         data,
     ].join('\n')
 
-    libreReadings = csvParse(data)
+    const parsedData = csvParse(data)
+    let libreReadings: LibreViewReading[] = []
+    parsedData.map((reading: any) => {
+        libreReadings.push(<LibreViewReading>reading)
+    })
+
     if (libreReadings.length < 2) {
         return {
             records: [],
