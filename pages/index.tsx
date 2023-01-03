@@ -261,6 +261,13 @@ export default function Home() {
                     </>
                 )}
             </div>
+            <div className="mt-8 mb-8 text-center text-sm text-gray-600">
+                t1d.tools is a collection of Type 1 Diabetes related tools. They're all open source and can be found on{' '}
+                <a href="https://github.com/t1dtools" className="underline hover:no-underline">
+                    GitHub
+                </a>
+                .
+            </div>
         </>
     )
 }
