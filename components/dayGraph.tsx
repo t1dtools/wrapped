@@ -638,8 +638,14 @@ export const DayGraph = (props: Props) => {
                     font-size: 20px;
                 }
 
-                .points li[data-percentage='100']::before {
+                 {
+                    /* .points li[data-percentage='100']::before {
                     content: '🦄';
+                } */
+                }
+
+                .points li[data-percentage='100']::before {
+                    content: '💯';
                 }
 
                 .points li[data-percentage='100'] .tooltiptext {
