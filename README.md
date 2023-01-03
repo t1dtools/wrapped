@@ -18,9 +18,9 @@ Currently there is support for the following CGMs:
 
 ✅ = Full support
 
-⛔ = No support, because I have not been able to obtain example data
+⛔ = No support, because I haven't been able to obtain example data
 
 🕐️ = Soon
 
-Want to help add support for something and have the data? Please open an issue and we can work together to anonymize it
-so I can implement it. Alternatively PRs are very welcome.
+Want to help adding support for something and have the data? Please open an issue and we can work together to anonymize
+it so I can implement it. Alternatively PRs are very welcome.
