@@ -642,12 +642,6 @@ export const DayGraph = (props: Props) => {
                     padding-left:1px;
                 }
 
-                 {
-                    /* .points li[data-percentage='100']::before {
-                    content: '🦄';
-                } */
-                }
-
                 .points li[data-percentage='100']::before {
                     content: '💯';
                 }
