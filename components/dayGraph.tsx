@@ -636,6 +636,7 @@ export const DayGraph = (props: Props) => {
                 .points li[data-percentage='100'] {
                     background-color: transparent;
                     font-size: 20px;
+                    line-height: 22px;
                 }
 
                  {
@@ -649,7 +650,7 @@ export const DayGraph = (props: Props) => {
                 }
 
                 .points li[data-percentage='100'] .tooltiptext {
-                    font-size: 14px;
+                    font-size: 16px;
                 }
             `}</style>
         </>
