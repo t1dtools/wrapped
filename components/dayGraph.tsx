@@ -238,405 +238,408 @@ export const DayGraph = (props: Props) => {
                 }
 
                 .points li[data-percentage='1'] {
-                    background-color: #c6e48b;
+                    background-color: hsl(27, 45%, 30%);
                 }
 
                 .points li[data-percentage='2'] {
-                    background-color: #7bc96f;
+                    background-color: hsl(27, 45%, 30%);
                 }
 
                 .points li[data-percentage='3'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 45%, 30%);
                 }
 
                 .points li[data-percentage='4'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 45%, 30%);
                 }
 
                 .points li[data-percentage='5'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 45%, 30%);
                 }
 
                 .points li[data-percentage='6'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 45%, 30%);
                 }
 
                 .points li[data-percentage='7'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 45%, 30%);
                 }
 
                 .points li[data-percentage='8'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 45%, 30%);
                 }
 
                 .points li[data-percentage='9'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 45%, 30%);
                 }
 
                 .points li[data-percentage='10'] {
-                    background-color: #196127;
+                    background-color: hsl(0, 100%, 39%);
                 }
 
                 .points li[data-percentage='11'] {
-                    background-color: #196127;
+                    background-color: hsl(0, 100%, 39%);
                 }
 
                 .points li[data-percentage='12'] {
-                    background-color: #196127;
+                    background-color: hsl(0, 100%, 39%);
                 }
 
                 .points li[data-percentage='13'] {
-                    background-color: #196127;
+                    background-color: hsl(0, 100%, 39%);
                 }
 
                 .points li[data-percentage='14'] {
-                    background-color: #196127;
+                    background-color: hsl(0, 100%, 39%);
                 }
 
                 .points li[data-percentage='15'] {
-                    background-color: #196127;
+                    background-color: hsl(0, 100%, 39%);
                 }
 
                 .points li[data-percentage='16'] {
-                    background-color: #196127;
+                    background-color: hsl(0, 100%, 39%);
                 }
 
                 .points li[data-percentage='17'] {
-                    background-color: #196127;
+                    background-color: hsl(0, 100%, 39%);
                 }
 
                 .points li[data-percentage='18'] {
-                    background-color: #196127;
+                    background-color: hsl(0, 100%, 39%);
                 }
 
                 .points li[data-percentage='19'] {
-                    background-color: #196127;
+                    background-color: hsl(0, 100%, 39%);
                 }
 
                 .points li[data-percentage='20'] {
-                    background-color: #196127;
+                    background-color: hsl(16, 100%, 36%);
                 }
 
                 .points li[data-percentage='21'] {
-                    background-color: #196127;
+                    background-color: hsl(16, 100%, 36%);
                 }
 
                 .points li[data-percentage='22'] {
-                    background-color: #196127;
+                    background-color: hsl(16, 100%, 36%);
                 }
 
                 .points li[data-percentage='23'] {
-                    background-color: #196127;
+                    background-color: hsl(16, 100%, 36%);
                 }
 
                 .points li[data-percentage='24'] {
-                    background-color: #196127;
+                    background-color: hsl(16, 100%, 36%);
                 }
 
                 .points li[data-percentage='25'] {
-                    background-color: #196127;
+                    background-color: hsl(16, 100%, 36%);
                 }
 
                 .points li[data-percentage='26'] {
-                    background-color: #196127;
+                    background-color: hsl(16, 100%, 36%);
                 }
 
                 .points li[data-percentage='27'] {
-                    background-color: #196127;
+                    background-color: hsl(16, 100%, 36%);
                 }
 
                 .points li[data-percentage='28'] {
-                    background-color: #196127;
+                    background-color: hsl(16, 100%, 36%);
                 }
 
                 .points li[data-percentage='29'] {
-                    background-color: #196127;
+                    background-color: hsl(16, 100%, 36%);
                 }
 
                 .points li[data-percentage='30'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 100%, 36%);
                 }
 
                 .points li[data-percentage='31'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 100%, 36%);
                 }
 
                 .points li[data-percentage='32'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 100%, 36%);
                 }
 
                 .points li[data-percentage='33'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 100%, 36%);
                 }
 
                 .points li[data-percentage='34'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 100%, 36%);
                 }
 
                 .points li[data-percentage='35'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 100%, 36%);
                 }
 
                 .points li[data-percentage='36'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 100%, 36%);
                 }
 
                 .points li[data-percentage='37'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 100%, 36%);
                 }
 
                 .points li[data-percentage='38'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 100%, 36%);
                 }
 
                 .points li[data-percentage='39'] {
-                    background-color: #196127;
+                    background-color: hsl(27, 100%, 36%);
                 }
 
                 .points li[data-percentage='40'] {
-                    background-color: #196127;
+                    background-color: hsl(53, 100%, 36%);
                 }
 
                 .points li[data-percentage='41'] {
-                    background-color: #196127;
+                    background-color: hsl(53, 100%, 36%);
                 }
 
                 .points li[data-percentage='42'] {
-                    background-color: #196127;
+                    background-color: hsl(53, 100%, 36%);
                 }
 
                 .points li[data-percentage='43'] {
-                    background-color: #196127;
+                    background-color: hsl(53, 100%, 36%);
                 }
 
                 .points li[data-percentage='44'] {
-                    background-color: #196127;
+                    background-color: hsl(53, 100%, 36%);
                 }
 
                 .points li[data-percentage='45'] {
-                    background-color: #196127;
+                    background-color: hsl(53, 100%, 36%);
                 }
 
                 .points li[data-percentage='46'] {
-                    background-color: #196127;
+                    background-color: hsl(53, 100%, 36%);
                 }
 
                 .points li[data-percentage='47'] {
-                    background-color: #196127;
+                    background-color: hsl(53, 100%, 36%);
                 }
 
                 .points li[data-percentage='48'] {
-                    background-color: #196127;
+                    background-color: hsl(53, 100%, 36%);
                 }
 
                 .points li[data-percentage='49'] {
-                    background-color: #196127;
+                    background-color: hsl(53, 100%, 36%);
                 }
 
                 .points li[data-percentage='50'] {
-                    background-color: #196127;
+                    background-color: hsl(61, 100%, 36%);
                 }
 
                 .points li[data-percentage='51'] {
-                    background-color: #196127;
+                    background-color: hsl(61, 100%, 36%);
                 }
 
                 .points li[data-percentage='52'] {
-                    background-color: #196127;
+                    background-color: hsl(61, 100%, 36%);
                 }
 
                 .points li[data-percentage='53'] {
-                    background-color: #196127;
+                    background-color: hsl(61, 100%, 36%);
                 }
 
                 .points li[data-percentage='54'] {
-                    background-color: #196127;
+                    background-color: hsl(61, 100%, 36%);
                 }
 
                 .points li[data-percentage='55'] {
-                    background-color: #196127;
+                    background-color: hsl(61, 100%, 36%);
                 }
 
                 .points li[data-percentage='56'] {
-                    background-color: #196127;
+                    background-color: hsl(61, 100%, 36%);
                 }
 
                 .points li[data-percentage='57'] {
-                    background-color: #196127;
+                    background-color: hsl(61, 100%, 36%);
                 }
 
                 .points li[data-percentage='58'] {
-                    background-color: #196127;
+                    background-color: hsl(61, 100%, 36%);
                 }
 
                 .points li[data-percentage='59'] {
-                    background-color: #196127;
+                    background-color: hsl(61, 100%, 36%);
                 }
 
                 .points li[data-percentage='60'] {
-                    background-color: #196127;
+                    background-color: hsl(67, 100%, 44%);
                 }
 
                 .points li[data-percentage='61'] {
-                    background-color: #196127;
+                    background-color: hsl(67, 100%, 44%);
                 }
 
                 .points li[data-percentage='62'] {
-                    background-color: #196127;
+                    background-color: hsl(67, 100%, 44%);
                 }
 
                 .points li[data-percentage='63'] {
-                    background-color: #196127;
+                    background-color: hsl(67, 100%, 44%);
                 }
 
                 .points li[data-percentage='64'] {
-                    background-color: #196127;
+                    background-color: hsl(67, 100%, 44%);
                 }
 
                 .points li[data-percentage='65'] {
-                    background-color: #196127;
+                    background-color: hsl(67, 100%, 44%);
                 }
 
                 .points li[data-percentage='66'] {
-                    background-color: #196127;
+                    background-color: hsl(67, 100%, 44%);
                 }
 
                 .points li[data-percentage='67'] {
-                    background-color: #196127;
+                    background-color: hsl(67, 100%, 44%);
                 }
 
                 .points li[data-percentage='68'] {
-                    background-color: #196127;
+                    background-color: hsl(67, 100%, 44%);
                 }
 
                 .points li[data-percentage='69'] {
-                    background-color: #196127;
+                    background-color: hsl(67, 100%, 44%);
                 }
 
                 .points li[data-percentage='70'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 31%);
                 }
 
                 .points li[data-percentage='71'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 31%);
                 }
 
                 .points li[data-percentage='72'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 31%);
                 }
 
                 .points li[data-percentage='73'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 31%);
                 }
 
                 .points li[data-percentage='74'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 31%);
                 }
 
                 .points li[data-percentage='75'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 31%);
                 }
 
                 .points li[data-percentage='76'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 31%);
                 }
 
                 .points li[data-percentage='77'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 31%);
                 }
 
                 .points li[data-percentage='78'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 31%);
                 }
 
                 .points li[data-percentage='79'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 31%);
                 }
 
                 .points li[data-percentage='80'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 39%);
                 }
 
                 .points li[data-percentage='81'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 39%);
                 }
 
                 .points li[data-percentage='82'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 39%);
                 }
 
                 .points li[data-percentage='83'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 39%);
                 }
 
                 .points li[data-percentage='84'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 39%);
                 }
 
                 .points li[data-percentage='85'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 39%);
                 }
 
                 .points li[data-percentage='86'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 39%);
                 }
 
                 .points li[data-percentage='87'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 39%);
                 }
 
                 .points li[data-percentage='88'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 39%);
                 }
 
                 .points li[data-percentage='89'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 39%);
                 }
 
                 .points li[data-percentage='90'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 50%);
                 }
 
                 .points li[data-percentage='91'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 50%);
                 }
 
                 .points li[data-percentage='92'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 50%);
                 }
 
                 .points li[data-percentage='93'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 50%);
                 }
 
                 .points li[data-percentage='94'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 50%);
                 }
 
                 .points li[data-percentage='95'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 50%);
                 }
 
                 .points li[data-percentage='96'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 50%);
                 }
 
                 .points li[data-percentage='97'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 50%);
                 }
 
                 .points li[data-percentage='98'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 50%);
                 }
 
                 .points li[data-percentage='99'] {
-                    background-color: #196127;
+                    background-color: hsl(144, 100%, 50%);
                 }
 
                 .points li[data-percentage='100'] {
-                    background-color: transparent;
-                    font-size: 20px;
+                    background-color: hsl(144, 100%, 50%);
+                    font-size: 14px;
                     line-height: 22px;
+                    color: transparent;
+                    text-shadow: 0 0 0 black;
+                    padding-left:1px;
                 }
 
                  {

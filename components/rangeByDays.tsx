@@ -53,7 +53,7 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                 {daysInRange.d0t10 > 0 && (
                     <div
                         style={{
-                            backgroundColor: 'rgba(229,0,20,1)',
+                            backgroundColor: 'hsl(0, 0%, 13%)',
                             flexGrow: daysInRange.d0t10,
                         }}
                     >
@@ -67,7 +67,7 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                 {daysInRange.d10t20 > 0 && (
                     <div
                         style={{
-                            backgroundColor: 'rgba(231,18,1,1)',
+                            backgroundColor: 'hsl(0, 100%, 39%)',
                             flexGrow: daysInRange.d10t20,
                         }}
                     >
@@ -81,7 +81,7 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                 {daysInRange.d20t30 > 0 && (
                     <div
                         style={{
-                            backgroundColor: 'rgba(232,57,3,1)',
+                            backgroundColor: 'hsl(16, 100%, 36%)',
                             flexGrow: daysInRange.d20t30,
                         }}
                         >
@@ -95,7 +95,7 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                 {daysInRange.d30t40 > 0 && (
                     <div
                         style={{
-                            backgroundColor: 'rgba(234,96,5,1)',
+                            backgroundColor: 'hsl(27, 100%, 36%)',
                             flexGrow: daysInRange.d30t40,
                         }}
                         >
@@ -109,7 +109,7 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                 {daysInRange.d40t50 > 0 && (
                     <div
                         style={{
-                            backgroundColor: 'rgba(236,134,6,1)',
+                            backgroundColor: 'hsl(53, 100%, 36%)',
                             flexGrow: daysInRange.d40t50,
                         }}
                         >
@@ -123,7 +123,7 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                 {daysInRange.d50t60 > 0 && (
                     <div
                         style={{
-                            backgroundColor: 'rgba(238,173,8,1)',
+                            backgroundColor: 'hsl(61, 100%, 36%)',
                             flexGrow: daysInRange.d50t60,
                         }}
                         >
@@ -137,7 +137,7 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                 {daysInRange.d60t70 > 0 && (
                     <div
                         style={{
-                            backgroundColor: 'rgba(239,211,10,1)',
+                            backgroundColor: 'hsl(67, 100%, 44%)',
                             flexGrow: daysInRange.d60t70,
                         }}
                         >
@@ -151,7 +151,7 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                 {daysInRange.d70t80 > 0 && (
                     <div
                         style={{
-                            backgroundColor: 'hsl(95, 100%, 50%)',
+                            backgroundColor: 'hsl(144, 100%, 31%)',
                             flexGrow: daysInRange.d70t80,
                         }}
                         >
@@ -165,7 +165,7 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                 {daysInRange.d80t90 > 0 && (
                     <div
                         style={{
-                            backgroundColor: 'hsl(106, 100%, 50%)',
+                            backgroundColor: 'hsl(144, 100%, 39%)',
                             flexGrow: daysInRange.d80t90,
                         }}
                         >

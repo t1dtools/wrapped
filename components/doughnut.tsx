@@ -2,6 +2,7 @@ type DoughnutProps = {
     count: number
     headline: string
     total: number
+    color?: string
 }
 
 export const Doughnut = (props: DoughnutProps) => {
@@ -25,7 +26,7 @@ export const Doughnut = (props: DoughnutProps) => {
                                 strokeWidth={15}
                                 strokeDashoffset={doughnutFillRate}
                                 strokeLinecap="round"
-                                stroke="#00ff66"
+                                stroke={props.color !== null ? props.color : "#00ff66"}
                                 fill="none"
                             />
                         </g>

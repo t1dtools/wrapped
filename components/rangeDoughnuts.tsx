@@ -67,11 +67,11 @@ export const RangeDoughnuts = ({ dailyRecords }: { dailyRecords: DailyRecord[] }
             <div
                 className="doughnuts w-[1500px]"
                 style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 30 }}>
-                <Doughnut count={daysOverPercentage.d60} headline="Days over 60%" total={total} />
-                <Doughnut count={daysOverPercentage.d70} headline="Days over 70%" total={total} />
-                <Doughnut count={daysOverPercentage.d80} headline="Days over 80%" total={total} />
-                <Doughnut count={daysOverPercentage.d90} headline="Days over 90%" total={total} />
-                <Doughnut count={daysOverPercentage.d100} headline="Days at 100%" total={total} />
+                <Doughnut count={daysOverPercentage.d60} headline="Days over 60%" total={total} color="hsl(61, 100%, 36%)" />
+                <Doughnut count={daysOverPercentage.d70} headline="Days over 70%" total={total} color="hsl(67, 100%, 44%)" />
+                <Doughnut count={daysOverPercentage.d80} headline="Days over 80%" total={total} color="hsl(144, 100%, 31%)" />
+                <Doughnut count={daysOverPercentage.d90} headline="Days over 90%" total={total} color="hsl(144, 100%, 39%)" />
+                <Doughnut count={daysOverPercentage.d100} headline="Days at 100%" total={total} color="hsl(144, 100%, 50%)" />
             </div>
         </>
     )
