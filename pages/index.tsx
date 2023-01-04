@@ -15,6 +15,7 @@ export default function Home() {
     const [dailyRecords, setDailyRecords] = useState<DailyRecord[]>([])
     const [CGMDataLoading, setCGMDataLoading] = useState<boolean | string>(false)
     const [CGMDataError, setCGMDataError] = useState<string | null>(null)
+    const [showCSVGuide, setShowCSVGuide] = useState<boolean>(false)
 
     const [dragActive, setDragActive] = useState<boolean>(false)
 
@@ -104,6 +105,11 @@ export default function Home() {
         setDailyRecords(demoData)
     }
 
+    const toggleCSVGuide = (e: any) => {
+      e.preventDefault()
+      setShowCSVGuide(!showCSVGuide)
+    }
+
     return (
         <>
             <Head>
@@ -165,8 +171,27 @@ export default function Home() {
                                 {(cgmProvider === 'libreview' || cgmProvider === 'dexcom') && (
                                     <div className="grid grid-cols-1 space-y-2">
                                         <label className="text-sm font-bold tracking-wide text-gray-500">
-                                            Select your CSV file
+                                            Select your CSV file <span className="text-sm font-thin text-gray-400">(<button onClick={(e) => toggleCSVGuide(e)}>How?</button>)</span>
                                         </label>
+                                        {showCSVGuide && (
+                                            <div className="bg-gray-700 rounded-lg p-4">
+                                              {cgmProvider === 'libreview' && (
+                                                <>
+                                                <p className="font-bold">Analyze your LibreView data</p>
+                                                  <ul className="list-disc p-2">
+                                                    <li>Log in to your account on <a href="https://www.libreview.com/" target="_blank" className="text-blue-500 hover:text-blue-700">LibreView</a></li>
+                                                    <li>Click the blue "Download glucose data" button in the top right corner, and save the generated file to your computer.</li>
+                                                    <li>Drag and drop the file into the box below, or click the box to select the file.</li>
+                                                  </ul>
+                                                </>
+                                              )}
+                                              {cgmProvider === 'dexcom' && (
+                                                <>
+                                                  Currently instructions are missing for Dexcom Clarity. If you can help, please open an issue on <a className="text-blue-500 hover:text-blue-700" href="https://github.com/t1dtools/wrapped">GitHub</a>.
+                                                </>
+                                              )}
+                                            </div>
+                                        )}
                                         <div className="flex w-full items-center justify-center">
                                             <div
                                                 className={classnames(
