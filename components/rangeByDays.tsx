@@ -56,7 +56,13 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                             backgroundColor: 'rgba(229,0,20,1)',
                             flexGrow: daysInRange.d0t10,
                         }}
-                    />
+                    >
+                        <span className="tooltiptext">
+                            <>
+                                {daysInRange.d0t10} days between 0% and 10% in range
+                            </>
+                        </span>
+                    </div>
                 )}
                 {daysInRange.d10t20 > 0 && (
                     <div
@@ -64,7 +70,13 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                             backgroundColor: 'rgba(231,18,1,1)',
                             flexGrow: daysInRange.d10t20,
                         }}
-                    />
+                    >
+                        <span className="tooltiptext">
+                            <>
+                                {daysInRange.d10t20} days between 10% and 20% in range
+                            </>
+                        </span>
+                    </div>
                 )}
                 {daysInRange.d20t30 > 0 && (
                     <div
@@ -72,7 +84,13 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                             backgroundColor: 'rgba(232,57,3,1)',
                             flexGrow: daysInRange.d20t30,
                         }}
-                    />
+                        >
+                        <span className="tooltiptext">
+                            <>
+                                {daysInRange.d20t30} days between 20% and 30% in range
+                            </>
+                        </span>
+                    </div>
                 )}
                 {daysInRange.d30t40 > 0 && (
                     <div
@@ -80,7 +98,13 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                             backgroundColor: 'rgba(234,96,5,1)',
                             flexGrow: daysInRange.d30t40,
                         }}
-                    />
+                        >
+                        <span className="tooltiptext">
+                            <>
+                                {daysInRange.d30t40} days between 30% and 40% in range
+                            </>
+                        </span>
+                    </div>
                 )}
                 {daysInRange.d40t50 > 0 && (
                     <div
@@ -88,7 +112,13 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                             backgroundColor: 'rgba(236,134,6,1)',
                             flexGrow: daysInRange.d40t50,
                         }}
-                    />
+                        >
+                        <span className="tooltiptext">
+                            <>
+                                {daysInRange.d40t50} days between 40% and 50% in range
+                            </>
+                        </span>
+                    </div>
                 )}
                 {daysInRange.d50t60 > 0 && (
                     <div
@@ -96,7 +126,13 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                             backgroundColor: 'rgba(238,173,8,1)',
                             flexGrow: daysInRange.d50t60,
                         }}
-                    />
+                        >
+                        <span className="tooltiptext">
+                            <>
+                                {daysInRange.d50t60} days between 50% and 60% in range
+                            </>
+                        </span>
+                    </div>
                 )}
                 {daysInRange.d60t70 > 0 && (
                     <div
@@ -104,7 +140,13 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                             backgroundColor: 'rgba(239,211,10,1)',
                             flexGrow: daysInRange.d60t70,
                         }}
-                    />
+                        >
+                        <span className="tooltiptext">
+                            <>
+                                {daysInRange.d60t70} days between 60% and 70% in range
+                            </>
+                        </span>
+                    </div>
                 )}
                 {daysInRange.d70t80 > 0 && (
                     <div
@@ -112,7 +154,13 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                             backgroundColor: 'hsl(95, 100%, 50%)',
                             flexGrow: daysInRange.d70t80,
                         }}
-                    />
+                        >
+                        <span className="tooltiptext">
+                            <>
+                                {daysInRange.d70t80} days between 70% and 80% in range
+                            </>
+                        </span>
+                    </div>
                 )}
                 {daysInRange.d80t90 > 0 && (
                     <div
@@ -120,7 +168,13 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                             backgroundColor: 'hsl(106, 100%, 50%)',
                             flexGrow: daysInRange.d80t90,
                         }}
-                    />
+                        >
+                        <span className="tooltiptext">
+                            <>
+                                {daysInRange.d80t90} days between 80% and 90% in range
+                            </>
+                        </span>
+                    </div>
                 )}
                 {daysInRange.d90t100 > 0 && (
                     <div
@@ -128,13 +182,52 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                             backgroundColor: 'hsl(144, 100%, 50%)',
                             flexGrow: daysInRange.d90t100,
                         }}
-                    />
+                        >
+                        <span className="tooltiptext">
+                            <>
+                                {daysInRange.d90t100} days between 90% and 100% in range
+                            </>
+                        </span>
+                    </div>
                 )}
             </div>
 
             <style jsx>{`
                 .percentage-bar div {
                     height: 50px;
+                    display: inline-block;
+                    position: relative;
+                }
+
+                .percentage-bar div .tooltiptext {
+                    visibility: hidden;
+                    width: 150px;
+                    background-color: black;
+                    color: #fff;
+                    text-align: center;
+                    padding: 5px 0;
+                    border-radius: 6px;
+                    position: absolute;
+                    z-index: 1;
+                    top: -5px;
+                    left: 105%;
+                }
+
+                .percentage-bar div .tooltiptext::after {
+                    content: ' ';
+                    position: absolute;
+                    top: 50%;
+                    right: 100%;
+                    margin-top: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: transparent black transparent transparent;
+                }
+
+                /* Show the tooltip text when you mouse over the tooltip container */
+
+                .percentage-bar div:hover .tooltiptext {
+                    visibility: visible;
                 }
             `}</style>
         </>
