@@ -634,16 +634,14 @@ export const DayGraph = (props: Props) => {
                 }
 
                 .points li[data-percentage='100'] {
-                    background-color: hsl(144, 100%, 50%);
-                    font-size: 14px;
+                    background-color: transparent;
+                    font-size: 18px;
                     line-height: 22px;
-                    color: transparent;
-                    text-shadow: 0 0 0 black;
                     padding-left:1px;
                 }
 
                 .points li[data-percentage='100']::before {
-                    content: '💯';
+                    content: '🥳';
                 }
 
                 .points li[data-percentage='100'] .tooltiptext {
