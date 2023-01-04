@@ -224,10 +224,16 @@ export const RangeByDays = ({ dailyRecords }: { dailyRecords: DailyRecord[] }) =
                     border-color: transparent black transparent transparent;
                 }
 
-                /* Show the tooltip text when you mouse over the tooltip container */
-
                 .percentage-bar div:hover .tooltiptext {
                     visibility: visible;
+                }
+
+                .percentage-bar div:first-child {
+                    border-radius: 5px 0 0 5px;
+                }
+
+                .percentage-bar div:last-child {
+                    border-radius: 0 5px 5px 0;
                 }
             `}</style>
         </>
