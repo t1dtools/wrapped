@@ -1,4 +1,4 @@
-import { GlucoseReading, ParseResponse } from './glucose'
+import { GlucoseReading, ParseResponse, GlucoseTypes, Options } from './glucose'
 import { parse } from 'date-fns'
 import { csvParse } from 'd3-dsv'
 
@@ -10,7 +10,7 @@ export type DexcomClarityReading = {
     'Patient Info': string
     'Device Info': string
     'Source Device ID': string
-    'Glucose Value (mmol/L)': string
+    'Glucose Value': string
     'Insulin Value (u)': string
     'Carb Value (grams)': string
     'Duration (hh:mm:ss)': string
@@ -30,6 +30,17 @@ export const parseDexcomClarityData = async (file: File, year: number): Promise<
         data = data.slice(102)
     }
 
+    if (data.includes(`"ï»¿""Index"""`)) {
+        data = data.replace(`"ï»¿""Index"""`, `Index`)
+    }
+
+    const glucoseType = data.includes('mg/dL') ? GlucoseTypes.mgdl : GlucoseTypes.mmol
+    if (data.includes("mg/dL")) {
+        data = data.replace("Glucose Value (mg/dL)", "Glucose Value")
+    } else if (data.includes("mmol/L")) {
+        data = data.replace("Glucose Value (mmol/L)", "Glucose Value")
+    }
+
     const parsedData = csvParse(data)
     let dexcomReadings: DexcomClarityReading[] = []
     parsedData.map((reading, index) => {
@@ -46,25 +57,30 @@ export const parseDexcomClarityData = async (file: File, year: number): Promise<
         }
     }
 
-    // if (dexcomReadings[1]['Event Type'].indexOf('FirstName') === -1) {
-    //     return {
-    //         records: [],
-    //         error: { message: 'Invalid or unknown data format. Did you choose the correct CGM provider?' },
-    //     }
-    // }
+    const options = {
+        glucoseType,
+        year
+    }
 
-    const glucoseReadings: GlucoseReading[] = mapDexcomClarityToGlucoseReadings(dexcomReadings)
+    const glucoseReadings: GlucoseReading[] = mapDexcomClarityToGlucoseReadings(dexcomReadings, options)
 
     return { records: glucoseReadings, error: null }
 }
 
-const mapDexcomClarityToGlucoseReadings = (libreReadings: DexcomClarityReading[]): GlucoseReading[] => {
+const mapDexcomClarityToGlucoseReadings = (readings: DexcomClarityReading[], options: Options): GlucoseReading[] => {
     const glucoseReadings: GlucoseReading[] = []
-    libreReadings.forEach(reading => {
-        if (reading['Event Type'] === 'EGV' && reading['Glucose Value (mmol/L)'] !== '') {
+    readings.forEach(reading => {
+        let date = parse(reading['Timestamp (YYYY-MM-DDThh:mm:ss)'], "yyyy-MM-dd'T'HH:mm:ss", new Date())
+        // check if date is invalid, and try alternative format
+        if (isNaN(date.getTime())) {
+            date = parse(reading['Timestamp (YYYY-MM-DDThh:mm:ss)'], "yyyy-MM-dd HH:mm:ss", new Date())
+        }
+
+        if (reading['Event Type'] === 'EGV' && reading['Glucose Value'] !== '' && date.getFullYear() === options.year) {
+            const value = parseFloat(reading['Glucose Value'])
             const glucoseReading: GlucoseReading = {
-                Timestamp: parse(reading['Timestamp (YYYY-MM-DDThh:mm:ss)'], "yyyy-MM-dd'T'HH:mm:ss", new Date()),
-                Value: parseFloat(reading['Glucose Value (mmol/L)']),
+                Timestamp: date,
+                Value: options.glucoseType === GlucoseTypes.mmol ? value : value / 18,
             }
             glucoseReadings.push(glucoseReading)
         }

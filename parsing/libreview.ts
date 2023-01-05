@@ -1,4 +1,4 @@
-import { GlucoseReading, ParseResponse } from './glucose'
+import { GlucoseReading, ParseResponse, GlucoseTypes, Options } from './glucose'
 import { parse } from 'date-fns'
 import { csvParse } from 'd3-dsv'
 
@@ -22,17 +22,6 @@ export type LibreViewReading = {
     MealInsulinUnits: string
     CorrectionInsulinUnits: string
     UserChangeInsulinUnits: string
-}
-
-enum GlucoseTypes {
-    'mgdl',
-    'mmol'
-}
-
-
-export type Options = {
-    glucoseType: GlucoseTypes
-    year: number,
 }
 
 export const parseLibreViewData = async (file: File, year: number): Promise<ParseResponse> => {
