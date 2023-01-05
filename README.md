@@ -11,9 +11,9 @@ data that is very sensitive to the individual.
 Currently there is support for the following CGMs:
 
 | Data source    | mmol/L | mg/dL |
-| -------------- | ------ | ----- |
-| Dexcom Clarity | ✅     | ⛔    |
-| LibreView      | ✅     | ⛔    |
+| -------------- | ------ |-------|
+| Dexcom Clarity | ✅     | ⛔     |
+| LibreView      | ✅     | ✅    |
 | NightScout     | 🕐️    | 🕐️   |
 
 ✅ = Full support

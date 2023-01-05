@@ -7,8 +7,8 @@ export type LibreViewReading = {
     SerialNumber: string
     DeviceTimestamp: string
     RecordType: string
-    HistoricGlucoseMmol: string
-    ScanGlucoseMmol: string
+    HistoricGlucose: string
+    ScanGlucose: string
     NonNumericRapidActingInsulin: string
     RapidActingInsulinUnits: string
     NonNumericFood: string
@@ -17,11 +17,22 @@ export type LibreViewReading = {
     NonNumericLongActingInsulin: string
     LongActingInsulinValueUnits: string
     Notes: string
-    StripGlucoseMmol: string
-    KetoneMmol: string
+    StripGlucose: string
+    Ketone: string
     MealInsulinUnits: string
     CorrectionInsulinUnits: string
     UserChangeInsulinUnits: string
+}
+
+enum GlucoseTypes {
+    'mgdl',
+    'mmol'
+}
+
+
+export type Options = {
+    glucoseType: GlucoseTypes
+    year: number,
 }
 
 export const parseLibreViewData = async (file: File, year: number): Promise<ParseResponse> => {
@@ -31,11 +42,12 @@ export const parseLibreViewData = async (file: File, year: number): Promise<Pars
     }
 
     // Remove first line
-    data = data.split('\n').slice(1).join('\n')
+    const glucoseType = data.split('\n').slice(1,2).join('\n').includes("mg/dL") ? GlucoseTypes.mgdl : GlucoseTypes.mmol
 
+    data = data.split('\n').slice(1).join('\n')
     // Replace new first line
     data = [
-        'Device,SerialNumber,DeviceTimestamp,RecordType,HistoricGlucoseMmol,ScanGlucoseMmol,NonNumericRapidActingInsulin,RapidActingInsulinUnits,NonNumericFood,CarbohydratesGrams,CarbohydratesServings,NonNumericLongActingInsulin,LongActingInsulinValueUnits,Notes,StripGlucoseMmol,KetoneMmol,MealInsulinUnits,CorrectionInsulinUnits,UserChangeInsulinUnits\n',
+        'Device,SerialNumber,DeviceTimestamp,RecordType,HistoricGlucose,ScanGlucose,NonNumericRapidActingInsulin,RapidActingInsulinUnits,NonNumericFood,CarbohydratesGrams,CarbohydratesServings,NonNumericLongActingInsulin,LongActingInsulinValueUnits,Notes,StripGlucose,Ketone,MealInsulinUnits,CorrectionInsulinUnits,UserChangeInsulinUnits\n',
         data,
     ].join('\n')
 
@@ -59,21 +71,29 @@ export const parseLibreViewData = async (file: File, year: number): Promise<Pars
         }
     }
 
-    const glucoseReadings: GlucoseReading[] = mapLibreViewToGlucoseReadings(libreReadings)
+    const options = {
+        glucoseType,
+        year
+    }
+
+    const glucoseReadings: GlucoseReading[] = mapLibreViewToGlucoseReadings(libreReadings, options)
 
     return { records: glucoseReadings, error: null }
 }
 
-const mapLibreViewToGlucoseReadings = (libreReadings: LibreViewReading[]): GlucoseReading[] => {
+const mapLibreViewToGlucoseReadings = (libreReadings: LibreViewReading[], options: Options): GlucoseReading[] => {
     const glucoseReadings: GlucoseReading[] = []
+
     libreReadings.forEach(reading => {
-        if (reading.RecordType === '0') {
+        const date = parse(reading.DeviceTimestamp, 'dd-MM-yyyy HH:mm', new Date())
+        if (reading.RecordType === '0' && date.getFullYear() === options.year) {
             const glucoseReading: GlucoseReading = {
-                Timestamp: parse(reading.DeviceTimestamp, 'dd-MM-yyyy HH:mm', new Date()),
-                Value: parseFloat(reading.HistoricGlucoseMmol),
+                Timestamp: date,
+                Value: options.glucoseType === GlucoseTypes.mmol ? parseFloat(reading.HistoricGlucose) : parseFloat(reading.HistoricGlucose) / 18,
             }
             glucoseReadings.push(glucoseReading)
         }
     })
+
     return glucoseReadings
 }
