@@ -7,6 +7,7 @@ import { Headline } from '../components/headline'
 import { mapGlucoseRecordsToDailyRecords, DailyRecord } from '../datahandling/dailyRecords'
 import { parseLibreViewData } from '../parsing/libreview'
 import { parseDexcomClarityData } from '../parsing/dexcomclarity'
+import { fetchAndParseNightscoutData} from '../parsing/nightscout'
 import classnames from 'classnames'
 import { ParseResponse } from '../parsing/glucose'
 
@@ -16,6 +17,9 @@ export default function Home() {
     const [CGMDataLoading, setCGMDataLoading] = useState<boolean | string>(false)
     const [CGMDataError, setCGMDataError] = useState<string | null>(null)
     const [showCSVGuide, setShowCSVGuide] = useState<boolean>(false)
+
+    const [nightscoutDomain, setNightscoutDomain] = useState<string>('')
+    const [nightscoutSecret, setNightscoutSecret] = useState<string>('')
 
     const [dragActive, setDragActive] = useState<boolean>(false)
 
@@ -34,29 +38,52 @@ export default function Home() {
             parseData({ target: { files: event.dataTransfer.files } } as React.ChangeEvent<HTMLInputElement>)
     }
 
+    const getNightscoutData = async () => {
+        // setCGMDataLoading('Fetching data from Nightscout...')
+        setCGMDataLoading(true)
+        const response = await fetchAndParseNightscoutData(nightscoutDomain, nightscoutSecret, 2022)
+
+        if (response.error) {
+            setCGMDataError(response.error.message)
+            setCGMDataLoading(false)
+            return
+        }
+
+        const records = response.records
+
+        const mappedDailyRecords = mapGlucoseRecordsToDailyRecords(records)
+
+        setDailyRecords(mappedDailyRecords)
+        setCGMDataLoading(false)
+    }
+
     const parseData = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setCGMDataLoading(true)
         setDragActive(false)
 
-        if (!event.target.files) {
+        if (cgmProvider === undefined) {
             return
         }
 
-        const file = event.target.files[0]
+        let response: ParseResponse= {
+            records: [],
+            error: { message: 'No cgm provider selected.' },
+        }
 
-        let response: ParseResponse
-        switch (cgmProvider) {
-            case 'libreview':
+        if (['libreview', 'dexcom'].includes(cgmProvider)) {
+            if (!event.target.files) {
+                return
+            }
+
+            const file = event.target.files[0]
+
+            if (cgmProvider === 'libreview') {
                 response = await parseLibreViewData(file, 2022)
-                break
-            case 'dexcom':
+            } else if (cgmProvider === 'dexcom') {
                 response = await parseDexcomClarityData(file, 2022)
-                break
-            default:
-                response = {
-                    records: [],
-                    error: { message: 'No cgm provider selected.' },
-                }
+            }
+        } else if (cgmProvider === 'nightscout') {
+            response = await fetchAndParseNightscoutData(nightscoutDomain, nightscoutSecret, 2022)
         }
 
         if (response.error) {
@@ -106,8 +133,8 @@ export default function Home() {
     }
 
     const toggleCSVGuide = (e: any) => {
-      e.preventDefault()
-      setShowCSVGuide(!showCSVGuide)
+        e.preventDefault()
+        setShowCSVGuide(!showCSVGuide)
     }
 
     return (
@@ -159,37 +186,60 @@ export default function Home() {
                                         value={cgmProvider}
                                         onChange={e => setCGMProvider(e.target.value as any)}
                                         id="cgmproviders"
-                                        className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500">
+                                        className="block w-full rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none">
                                         <option value="choose">Choose a CGM data provider</option>
                                         <option value="dexcom">Dexcom Clarity</option>
                                         <option value="libreview">Libreview (Freestyle Libre)</option>
-                                        <option disabled={true} value="nightscout">
-                                            Nightscout (Coming soon)
-                                        </option>
+                                        <option value="nightscout">Nightscout</option>
                                     </select>
                                 </div>
                                 {(cgmProvider === 'libreview' || cgmProvider === 'dexcom') && (
                                     <div className="grid grid-cols-1 space-y-2">
                                         <label className="text-sm font-bold tracking-wide text-gray-500">
-                                            Select your CSV file <span className="text-sm font-thin text-gray-400">(<button onClick={(e) => toggleCSVGuide(e)}>How?</button>)</span>
+                                            Select your CSV file{' '}
+                                            <span className="text-sm font-thin text-gray-400">
+                                                (<button onClick={e => toggleCSVGuide(e)}>How?</button>)
+                                            </span>
                                         </label>
                                         {showCSVGuide && (
-                                            <div className="bg-gray-700 rounded-lg p-4">
-                                              {cgmProvider === 'libreview' && (
-                                                <>
-                                                <p className="font-bold">Analyze your LibreView data</p>
-                                                  <ul className="list-disc p-2">
-                                                    <li>Log in to your account on <a href="https://www.libreview.com/" target="_blank" className="text-blue-500 hover:text-blue-700">LibreView</a></li>
-                                                    <li>Click the blue "Download glucose data" button in the top right corner, and save the generated file to your computer.</li>
-                                                    <li>Drag and drop the file into the box below, or click the box to select the file.</li>
-                                                  </ul>
-                                                </>
-                                              )}
-                                              {cgmProvider === 'dexcom' && (
-                                                <>
-                                                  Currently instructions are missing for Dexcom Clarity. If you can help, please open an issue on <a className="text-blue-500 hover:text-blue-700" href="https://github.com/t1dtools/wrapped">GitHub</a>.
-                                                </>
-                                              )}
+                                            <div className="rounded-lg bg-gray-700 p-4">
+                                                {cgmProvider === 'libreview' && (
+                                                    <>
+                                                        <p className="font-bold">Analyze your LibreView data</p>
+                                                        <ul className="list-disc p-2">
+                                                            <li>
+                                                                Log in to your account on{' '}
+                                                                <a
+                                                                    href="https://www.libreview.com/"
+                                                                    target="_blank"
+                                                                    className="text-blue-500 hover:text-blue-700">
+                                                                    LibreView
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                Click the blue "Download glucose data" button in the top
+                                                                right corner, and save the generated file to your
+                                                                computer.
+                                                            </li>
+                                                            <li>
+                                                                Drag and drop the file into the box below, or click the
+                                                                box to select the file.
+                                                            </li>
+                                                        </ul>
+                                                    </>
+                                                )}
+                                                {cgmProvider === 'dexcom' && (
+                                                    <>
+                                                        Currently instructions are missing for Dexcom Clarity. If you
+                                                        can help, please open an issue on{' '}
+                                                        <a
+                                                            className="text-blue-500 hover:text-blue-700"
+                                                            href="https://github.com/t1dtools/wrapped">
+                                                            GitHub
+                                                        </a>
+                                                        .
+                                                    </>
+                                                )}
                                             </div>
                                         )}
                                         <div className="flex w-full items-center justify-center">
@@ -231,7 +281,47 @@ export default function Home() {
                                     </div>
                                 )}
                                 {cgmProvider === 'nightscout' && (
-                                    <div className="grid grid-cols-1 space-y-2">Coming soon</div>
+                                    <>
+                                        <div className="grid grid-cols-1 space-y-2">
+                                            <label
+                                                htmlFor="nsdomain"
+                                                className="text-sm font-bold tracking-wide text-gray-500">
+                                                Nightscout Server
+                                            </label>
+
+                                            <input
+                                                id="nsdomain"
+                                                type="text"
+                                                placeholder="https://nightscout.example.com"
+                                                className="block w-full rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+                                                onChange={e => setNightscoutDomain(e.target.value as string)}
+                                            />
+                                        </div>
+                                        <div className="grid grid-cols-1 space-y-2">
+                                            <label
+                                                htmlFor="nskey"
+                                                className="text-sm font-bold tracking-wide text-gray-500">
+                                                API Secret
+                                            </label>
+
+                                            <input
+                                                id="nskey"
+                                                type="text"
+                                                placeholder="t1dtools-0a6c761d3286c8d9"
+                                                className="block w-full rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+                                                onChange={e => setNightscoutSecret(e.target.value as string)}
+                                            />
+                                        </div>
+                                        <div className="grid grid-cols-1 space-y-2">
+                                            <button
+                                                id="nskey"
+                                                className="mt-8 rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-white focus:border-blue-500 focus:outline-none"
+                                                onClick={() => getNightscoutData()}
+                                            >
+                                                Wrap it!
+                                            </button>
+                                        </div>
+                                    </>
                                 )}
                             </form>
                         )}
