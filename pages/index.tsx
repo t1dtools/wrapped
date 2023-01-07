@@ -7,9 +7,10 @@ import { Headline } from '../components/headline'
 import { mapGlucoseRecordsToDailyRecords, DailyRecord } from '../datahandling/dailyRecords'
 import { parseLibreViewData } from '../parsing/libreview'
 import { parseDexcomClarityData } from '../parsing/dexcomclarity'
-import { fetchAndParseNightscoutData} from '../parsing/nightscout'
+import { fetchAndParseNightscoutData } from '../parsing/nightscout'
 import classnames from 'classnames'
 import { ParseResponse } from '../parsing/glucose'
+import { getLoadingMessage } from '../datahandling/loading'
 
 export default function Home() {
     const [cgmProvider, setCGMProvider] = useState<'dexcom' | 'libreview' | 'nightscout' | undefined>(undefined)
@@ -39,8 +40,10 @@ export default function Home() {
     }
 
     const getNightscoutData = async () => {
-        // setCGMDataLoading('Fetching data from Nightscout...')
-        setCGMDataLoading(true)
+        setCGMDataLoading(getLoadingMessage())
+        const loadingInterval = setInterval(() => {
+            setCGMDataLoading(getLoadingMessage())
+        }, 2500)
         const response = await fetchAndParseNightscoutData(nightscoutDomain, nightscoutSecret, 2022)
 
         if (response.error) {
@@ -55,17 +58,21 @@ export default function Home() {
 
         setDailyRecords(mappedDailyRecords)
         setCGMDataLoading(false)
+        clearInterval(loadingInterval)
     }
 
     const parseData = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCGMDataLoading(true)
+        setCGMDataLoading(getLoadingMessage())
+        const loadingInterval = setInterval(() => {
+            setCGMDataLoading(getLoadingMessage())
+        }, 2500)
         setDragActive(false)
 
         if (cgmProvider === undefined) {
             return
         }
 
-        let response: ParseResponse= {
+        let response: ParseResponse = {
             records: [],
             error: { message: 'No cgm provider selected.' },
         }
@@ -98,6 +105,7 @@ export default function Home() {
 
         setDailyRecords(mappedDailyRecords)
         setCGMDataLoading(false)
+        clearInterval(loadingInterval)
     }
 
     const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -316,8 +324,7 @@ export default function Home() {
                                             <button
                                                 id="nskey"
                                                 className="mt-8 rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-white focus:border-blue-500 focus:outline-none"
-                                                onClick={() => getNightscoutData()}
-                                            >
+                                                onClick={() => getNightscoutData()}>
                                                 Wrap it!
                                             </button>
                                         </div>
@@ -329,6 +336,9 @@ export default function Home() {
                         {CGMDataLoading && (
                             <div className="pt-8 text-center">
                                 Generating your wrapped report...
+                                {typeof CGMDataLoading === 'string' && (
+                                    <span className="mt-2 block">{CGMDataLoading}</span>
+                                )}
                                 <svg
                                     className="m-auto mt-2"
                                     width={24}
