@@ -43,8 +43,14 @@ export default function Home() {
         setCGMDataLoading(getLoadingMessage())
         const loadingInterval = setInterval(() => {
             setCGMDataLoading(getLoadingMessage())
-        }, 2500)
-        const response = await fetchAndParseNightscoutData(nightscoutDomain, nightscoutSecret, 2022)
+        }, 4000)
+
+        let domain = nightscoutDomain
+        if(domain.endsWith('/')) {
+            domain = domain.slice(0, -1)
+        }
+
+        const response = await fetchAndParseNightscoutData(domain, nightscoutSecret, 2022)
 
         if (response.error) {
             clearInterval(loadingInterval)
