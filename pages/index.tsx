@@ -47,6 +47,7 @@ export default function Home() {
         const response = await fetchAndParseNightscoutData(nightscoutDomain, nightscoutSecret, 2022)
 
         if (response.error) {
+            clearInterval(loadingInterval)
             setCGMDataError(response.error.message)
             setCGMDataLoading(false)
             return
@@ -69,6 +70,7 @@ export default function Home() {
         setDragActive(false)
 
         if (cgmProvider === undefined) {
+            clearInterval(loadingInterval)
             return
         }
 
@@ -79,6 +81,7 @@ export default function Home() {
 
         if (['libreview', 'dexcom'].includes(cgmProvider)) {
             if (!event.target.files) {
+                clearInterval(loadingInterval)
                 return
             }
 
@@ -94,6 +97,7 @@ export default function Home() {
         }
 
         if (response.error) {
+            clearInterval(loadingInterval)
             setCGMDataError(response.error.message)
             setCGMDataLoading(false)
             return
@@ -290,6 +294,36 @@ export default function Home() {
                                 )}
                                 {cgmProvider === 'nightscout' && (
                                     <>
+                                        <div className="grid grid-cols-1 space-y-2 text-gray-500">
+                                            <span className="text-sm font-bold tracking-wide text-gray-500">
+                                                Nightscout Requirements
+                                            </span>
+                                            <ul className="list-decimal pl-8 rounded-xl text-sm text-gray-400 bg-gray-700 p-4">
+                                                <li>
+                                                    API Secret with at least a{' '}
+                                                    <span className="rounded bg-slate-900 p-1 font-mono text-sm font-bold">
+                                                        readable
+                                                    </span>{' '}
+                                                    role.
+                                                </li>
+                                                <li>
+                                                    Ensure that your Nightscout instance has{' '}
+                                                    <span className="rounded bg-slate-900 p-1 font-mono text-sm font-bold">
+                                                        cors
+                                                    </span>{' '}
+                                                    in it's{' '}
+                                                    <a
+                                                        href="https://nightscout.github.io/nightscout/setup_variables/#cors-cors"
+                                                        target="_blank"
+                                                        className="text-blue-500 hover:text-blue-700">
+                                                        <span className="rounded bg-slate-900 p-1 font-mono text-sm font-bold">
+                                                            VARIABLE
+                                                        </span>
+                                                    </a>{' '}
+                                                    configuration.
+                                                </li>
+                                            </ul>
+                                        </div>
                                         <div className="grid grid-cols-1 space-y-2">
                                             <label
                                                 htmlFor="nsdomain"
@@ -323,8 +357,9 @@ export default function Home() {
                                         <div className="grid grid-cols-1 space-y-2">
                                             <button
                                                 id="nskey"
-                                                className="mt-8 rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-white focus:border-blue-500 focus:outline-none"
-                                                onClick={() => getNightscoutData()}>
+                                                className="mt-8 rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-sm text-white focus:border-blue-500 focus:outline-none disabled:cursor-not-allowed disabled:text-gray-500 disabled:opacity-50"
+                                                onClick={() => getNightscoutData()}
+                                                disabled={nightscoutDomain === '' || nightscoutSecret === ''}>
                                                 Wrap it!
                                             </button>
                                         </div>
