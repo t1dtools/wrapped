@@ -13,8 +13,8 @@ Currently there is support for the following CGMs:
 | Data source    | mmol/L | mg/dL |
 | -------------- | ------ |-------|
 | Dexcom Clarity | ✅     | ✅     |
-| LibreView      | ✅     | ✅    |
-| NightScout     | 🕐️    | 🕐️   |
+| LibreView      | ✅     | ✅     |
+| NightScout     | ✅     | ✅     |
 
 ✅ = Full support
 
