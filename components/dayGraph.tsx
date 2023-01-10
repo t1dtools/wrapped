@@ -16,7 +16,9 @@ type Props = {
 export const DayGraph = (props: Props) => {
     const year = props.dailyRecords[0].date.getFullYear()
     const preYearDays: Day[] = []
-    for (let i = 1; i < props.dailyRecords[0].date.getDay(); i++) {
+    const firstDayOfYear = new Date(year, 0, 1)
+
+    for (let i = 1; i < firstDayOfYear.getDay(); i++) {
         preYearDays.push({
             date: new Date(year - 1, 11, 31 - i),
             percentage: 0,
@@ -173,7 +175,6 @@ export const DayGraph = (props: Props) => {
                 /* Other styling */
 
                 .graph {
-                    border: 0px #e1e4e8 solid;
                     color: rgba(255, 255, 255, 0.3);
                 }
 
