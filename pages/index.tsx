@@ -46,7 +46,7 @@ export default function Home() {
         }, 4000)
 
         let domain = nightscoutDomain
-        if(domain.endsWith('/')) {
+        if (domain.endsWith('/')) {
             domain = domain.slice(0, -1)
         }
 
@@ -304,7 +304,7 @@ export default function Home() {
                                             <span className="text-sm font-bold tracking-wide text-gray-500">
                                                 Nightscout Requirements
                                             </span>
-                                            <ul className="list-decimal pl-8 rounded-xl text-sm text-gray-400 bg-gray-700 p-4">
+                                            <ul className="list-decimal rounded-xl bg-gray-700 p-4 pl-8 text-sm text-gray-400">
                                                 <li>
                                                     API Secret with at least a{' '}
                                                     <span className="rounded bg-slate-900 p-1 font-mono text-sm font-bold">
@@ -415,31 +415,18 @@ export default function Home() {
                 )}
 
                 {!CGMDataLoading && dailyRecords.length > 0 && (
-                    <>
-                        {
-                            <div className="mb-8 w-[1600px] rounded-xl bg-gray-800 p-10 pt-0">
-                                <DayGraph dailyRecords={dailyRecords} />
-                            </div>
-                        }
-                    </>
-                )}
-                {!CGMDataLoading && dailyRecords.length > 0 && (
-                    <>
-                        {
-                            <div className="mb-8 w-[1600px] rounded-xl bg-gray-800 p-10 pt-0">
-                                <RangeByDays dailyRecords={dailyRecords} />
-                            </div>
-                        }
-                    </>
-                )}
-                {!CGMDataLoading && dailyRecords.length > 0 && (
-                    <>
-                        {
-                            <div className="w-[1600px] rounded-xl bg-gray-800 p-10 pt-0">
-                                <RangeDoughnuts dailyRecords={dailyRecords} />
-                            </div>
-                        }
-                    </>
+                    <div className="max-w-[1600px] flex flex-col items-center justify-center self-center">
+                        <div className="mb-8 w-full rounded-xl bg-gray-800 p-10 pt-0">
+                            <DayGraph dailyRecords={dailyRecords} />
+                        </div>
+                        <div className="mb-8 w-full rounded-xl bg-gray-800 p-10 pt-0">
+                            <RangeByDays dailyRecords={dailyRecords} />
+                        </div>
+
+                        <div className="w-full rounded-xl bg-gray-800 p-10 pt-0">
+                            <RangeDoughnuts dailyRecords={dailyRecords} />
+                        </div>
+                    </div>
                 )}
             </div>
             <div className="mt-8 mb-8 text-center text-sm text-gray-600">
